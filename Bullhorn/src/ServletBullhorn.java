@@ -52,11 +52,6 @@ public class ServletBullhorn extends HttpServlet {
 		System.out.println(postObj.getPostId());
 		Database.insert(postObj);
 		
-		String button ="";
-
-		
-		button +="<br><br><a href= 'ServletViewPosts' class='btn btn-info' style=align:center>View Post</a>";
-		request.setAttribute("message", button);
 		getServletContext().getRequestDispatcher("/UserAccount.jsp").forward(request, response);
 		
 		
