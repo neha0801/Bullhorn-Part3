@@ -1,9 +1,6 @@
 
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Bloguser;
-import model.Bullhorn;
-import customTools.DBUtil;
 
 /**
  * Servlet implementation class ServletBullhorn
@@ -34,7 +29,10 @@ public class ServletBullhorn extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+		HttpSession session = request.getSession();
+		Bloguser bUser= (Bloguser) session.getAttribute("bloguser");
+		request.setAttribute("user_name", bUser.getName());
+		getServletContext().getRequestDispatcher("/UserAccount.jsp").forward(request, response);
 	}
 
 	/**

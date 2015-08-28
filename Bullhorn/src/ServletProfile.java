@@ -1,6 +1,6 @@
 
-
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import customTools.DBUtil;
 import model.Bloguser;
+import model.Bullhorn;
 
 /**
  * Servlet implementation class ServletProfile
@@ -19,28 +20,32 @@ import model.Bloguser;
 @WebServlet("/ServletProfile")
 public class ServletProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletProfile() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+	public ServletProfile() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("dopost");
 		Bloguser bUser = null;
+		EntityManager em =  DBUtil.getEmFactory().createEntityManager();
 		String linkUser =request.getParameter("linkuser");
 		HttpSession session = request.getSession();
 		bUser= (Bloguser) session.getAttribute("bloguser");
@@ -50,15 +55,14 @@ public class ServletProfile extends HttpServlet {
 		}
 		request.setAttribute("user_name",name);
 		if (linkUser!=null){
-			EntityManager em =  DBUtil.getEmFactory().createEntityManager();;
 			String  sql = "select b from Bloguser b where b.userId = :id";
 			bUser = em.createQuery(sql, Bloguser.class).setParameter("id", Integer.parseInt(linkUser)).getSingleResult();
 		}
-		System.out.println("reviewer = " + bUser.getUserId());
+		System.out.println("user = " + bUser.getUserId());
 
 		String userData = "";
-		userData+= "<div class='container'><div class='jumbotron' align=center style='background-color: grey'> ";
-		userData+= "<h1 align=center style='color: black'><b>User Profile</b></h1><br></br></div>";
+		userData+= "<div class='container'>";
+		userData+= "<h1 align=center style='color: black'><b>User Profile</b></h1><br></br>";
 		userData += "<div class='panel panel-primary col-sm-8'>";
 		userData += "<div class='panel-heading'>";	
 		userData +=	"Name: " + bUser.getName();
@@ -76,10 +80,27 @@ public class ServletProfile extends HttpServlet {
 		//reviewerData += "<a href='EditProfile'><span class='glyphicon glyphicon-pencil'></span>Edit</a>";
 		userData += "</div>";		
 		userData += "</div>";
-		userData += "</div>";		
+		userData += "</div>";	
+		String  sql = "select b from Bullhorn b where b.bloguser.userId = :id order by b.postId desc";
+		List<Bullhorn> bullHornPost = em.createQuery(sql, model.Bullhorn.class).setParameter("id",bUser.getUserId()).getResultList();
+		
+		userData+="<br><br>";
+		userData += "\r<table class=table border=1 align=center>";
+		userData += "<tr style=background-color:green>";
+		userData += "<th>";
+		userData += "Post";
+		userData += "</th>";
+		userData += "</tr>\r";
+		for(model.Bullhorn b : bullHornPost){
+		userData += "<tr class='info'>";
+		userData += "<td>";
+		userData += b.getPost();
+		userData += "</td>";
+		userData += "</tr>\r";
+		System.out.println("post = " +  b.getPost());
+		}
 
 		request.setAttribute("userData", userData);
 		getServletContext().getRequestDispatcher("/Profile.jsp").forward(request, response);
 	}
-
 }

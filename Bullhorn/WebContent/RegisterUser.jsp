@@ -90,9 +90,10 @@ body {
 						}
 					%>
 				</div>
-				<button type="submit" value="submit" class="btn btn-primary">Register</button>
+				<button type="submit" value="submit" class="btn btn-success">Register</button>
 			</form>
-
+			<br>
+<a href="LoginForm?guestUser=no" class="btn btn-danger">Cancel</a> <br><br>
 
 		</div>
 	</div>

@@ -37,6 +37,16 @@ body {
 	background-color: #a6d2d2;
 	font-size: 15px;
 }
+table {
+	text-align: center;
+	border-color: #00ffff;
+	color: light blue;
+	width:40%;
+}
+th{
+	text-align: center;
+	color: light blue;
+}
 </style>
 </head>
 <body>

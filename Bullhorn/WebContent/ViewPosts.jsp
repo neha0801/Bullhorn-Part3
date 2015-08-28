@@ -48,7 +48,7 @@ th{
 			</div>
 			    <div>
 		      <ul class="nav navbar-nav">
-		        <li ><a href="UserAccount.jsp">Home</a></li>
+		        <li ><a href="ServletBullhorn">Home</a></li>
 		        <li class="active"><a href="ServletViewPosts">View Posts</a></li>
 		        <li><a href="ServletProfile">${user_name}</a></li>		        
 		        <li><a href="LoginForm?logout=yes">Log out</a></li>

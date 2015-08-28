@@ -43,7 +43,7 @@ h1{
 					guest="no";
 			      if(!guest.equalsIgnoreCase("yes")){%>			    
 				      <ul class="nav navbar-nav">
-				        <li ><a href="UserAccount.jsp">Home</a></li>
+				        <li ><a href="ServletBullhorn">Home</a></li>
 				        <li><a href="ServletViewPosts">View Posts</a></li>
 				        <li class="active"><a href="ServletProfile">${user_name}</a></li>		        
 				        <li><a href="LoginForm?logout=yes">Log out</a></li>
@@ -52,13 +52,14 @@ h1{
 		    </div>
 		</div>
 	</nav>
-	${userData}
 		<%  guest = (String) session.getAttribute("guestUser");
 		if(guest==null)
 			guest="no";
 		if(guest.equalsIgnoreCase("yes")){%>	
 			    <a href="ServletViewPosts?guestUser=yes" class="btn btn-danger">Go back</a> <br><br>
-			    <%}else%>
+			    <%}else {%>
 			     <a href="ServletViewPosts?guestUser=no" class="btn btn-danger">Go back</a> <br><br>
+			     <%}%>
+			     	${userData}
 </body>
 </html>

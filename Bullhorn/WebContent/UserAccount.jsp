@@ -46,17 +46,11 @@ h1 {
 		</div>
 	</nav>
 	<div class="container">
-		<div class="jumbotron" align=center style="background-color: grey">
-			<h1 align=center style="color: black">
-				<b>Bullhorn Blog</b>
-			</h1>
-			<br></br>
-
-		</div>
-		<form action="ServletBullhorn" method="post"
-			style="text-align: center">
-			<label style="font-size: 20px">Comments:</label><br></br>
-			<textarea rows='4' cols='50' name='post' style="text-align: center"></textarea>
+		<form action="ServletBullhorn" method="post">
+			<br>
+			<br>
+			<label style="font-size: 20px">Say something interesting:</label><br></br>
+			<textarea rows='4' cols='50' name='post'></textarea>
 			<br></br> <br> <input class="btn btn-primary" type='submit'
 				value='Submit'></input><br>
 			<br>
